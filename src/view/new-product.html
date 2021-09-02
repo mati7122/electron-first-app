@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Product</title>
+</head>
+
+<body>
+    <form>
+        <div>
+            <input type="text" id="name" placeholder="Product`s Name" autofocus>
+        </div>
+        <div>
+            <input type="text" id="price" placeholder="Product`s Price" autofocus>
+        </div>
+        <div>
+            <input type="text" id="description" placeholder="Product`s Description" autofocus>
+        </div>
+        <input type="submit">
+    </form>
+
+    <script>
+
+        const { ipcRenderer } = require('electron');
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', e => {
+            const nameProduct = document.querySelector('#name').value;
+            const priceProduct = document.querySelector('#price').value;
+            const descProduct = document.querySelector('#description').value;
+
+            const newProduct = {
+                name: nameProduct,
+                price: priceProduct,
+                description: descProduct,
+            }
+
+            ipcRenderer.send('product:new', newProduct);
+
+            e.preventDefault();
+        })
+    </script>
+</body>
+
+</html>
